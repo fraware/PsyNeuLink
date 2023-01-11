@@ -1215,11 +1215,22 @@ class Parameter(ParameterBase):
                         # here optionally
                         pass
                     else:
-                        next_child = getattr(next_child, self.name)
+                        next_child_param = getattr(next_child, self.name)
 
-                        if next_child._inherited:
-                            next_child._inherit_from(self)
-                            children.extend(next_child._owner._children)
+                        assert next_child_param._owner is next_child, (
+                            f'next_child_param {next_child_param} should have'
+                            f' owner {next_child._owner} but has owner {next_child_param._owner._owner}'
+                        )
+
+                        # next_child is an inherited Parameter that must
+                        # now inherit from self rather than its previous
+                        # uninherited ancestor
+                        if next_child_param._inherited:
+                            next_child_param._inherit_from(self)
+                            for c in next_child._children:
+                                assert c != next_child and c not in children, (
+                                    f'Cycle in parameter hierarchy from {next_child} to {c()}'
+                                )
 
                 self._restore_inherited_attrs()
 
