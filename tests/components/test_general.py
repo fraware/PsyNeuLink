@@ -63,6 +63,16 @@ def test_constructors_have_check_user_specified(class_):
     )
 
 
+@pytest.mark.parametrize("class_", component_classes)
+def test_classes_use_parent_class_Parameters(class_):
+    parent_class = class_.__mro__[1]
+    if (
+        'Parameters' in class_.__dict__
+        and isinstance(parent_class, pnl.core.components.component.ComponentsMeta)
+    ):
+        assert class_.Parameters.__mro__[1] == parent_class.Parameters
+
+
 @pytest.fixture(scope='module')
 def nested_compositions():
     comp = pnl.Composition(name='comp')
