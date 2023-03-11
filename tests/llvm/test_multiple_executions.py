@@ -35,7 +35,7 @@ def test_function(benchmark, executions, func_mode):
         e = pnlvm.execution.FuncExecution(f, [None for _ in range(executions)]).cuda_execute
 
     res = benchmark(e, var)
-    assert np.allclose(res, [expected for _ in range(executions)])
+    np.testing.assert_allclose(res, [expected for _ in range(executions)])
     assert executions == 1 or len(res) == executions
 
 @pytest.mark.multirun
@@ -66,7 +66,7 @@ def test_mechanism(benchmark, executions, mech_mode):
         expected = [expected for _ in range(executions)]
 
     res = benchmark(e, var)
-    assert np.allclose(res, expected)
+    np.testing.assert_allclose(res, expected)
     assert len(res) == executions
 
 
@@ -182,7 +182,7 @@ def test_nested_composition_run(benchmark, executions, mode):
         res = e.cuda_run(var, 1, 1)
         benchmark(e.cuda_run, var, 1, 1)
 
-    assert np.allclose(res, [expected for _ in range(executions)])
+    np.testing.assert_allclose(res, [expected for _ in range(executions)])
     assert len(res) == executions or executions == 1
 
 @pytest.mark.multirun
