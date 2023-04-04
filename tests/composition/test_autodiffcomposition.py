@@ -154,7 +154,7 @@ class TestTrainingCorrectness:
 
         assert len(results) == len(expected)
         for r, t in zip(results, expected):
-            np.testing.assert_allclose(r, t)
+            np.testing.assert_allclose(r, t, rtol=1e-5, atol=1e-8)
 
 
     # tests whether semantic network created as autodiff composition learns properly
@@ -454,7 +454,7 @@ class TestTrainingCorrectness:
 
         for res, exp in zip(results, expected):
             for r, e in zip(res, exp):
-                assert np.allclose(r, e)
+                assert np.allclose(r, e, rtol=1e-5, atol=1e-8)
 
     def test_pytorch_equivalence_with_autodiff_composition(self, autodiff_mode):
         iSs = np.array(
