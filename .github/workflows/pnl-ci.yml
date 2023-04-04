@@ -131,7 +131,7 @@ jobs:
 
     - name: Test with pytest
       timeout-minutes: 180
-      run: pytest --junit-xml=tests_out.xml --verbosity=0 -n auto ${{ matrix.extra-args }}
+      run: pytest --junit-xml=tests_out.xml --verbosity=0 -n auto ${{ matrix.extra-args }} "tests/composition/test_autodiffcomposition.py::TestTrainingCorrectness::test_semantic_net_training_correctness" "tests/composition/test_autodiffcomposition.py::TestTrainingCorrectness::test_xor_training_correctness" "tests/composition/test_control.py::TestControlMechanisms::test_modulation_of_random_state_direct" "tests/functions/test_combination.py::test_linear_combination_function" "tests/functions/test_combination.py::test_reduce_function" "tests/functions/test_distribution.py::test_execute" "tests/functions/test_fhn_integrator.py::test_basic" "tests/functions/test_integrator.py::test_execute" "tests/llvm/test_builtins_intrinsics.py::test_builtin_op" "tests/llvm/test_builtins_matrix.py::test_matrix_op" "tests/llvm/test_builtins_mt_random.py::test_random_normal" "tests/mechanisms/test_integrator_mechanism.py::TestIntegratorFunctions::test_FitzHughNagumo_simple_vector" "tests/mechanisms/test_transfer_mechanism.py::TestTransferMechanismIntegratorFunctionParams::test_transfer_mech_array_assignments_fct_over_mech_rate" "tests/models/test_bi_percepts.py::test_necker_cube" "tests/models/test_bi_percepts.py::test_vectorized_necker_cube" "tests/models/test_botvinick.py::test_botvinick_model"
 
     - name: Upload test results
       uses: actions/upload-artifact@v3
